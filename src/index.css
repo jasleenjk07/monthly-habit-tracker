@@ -1,0 +1,138 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f0ebe3;
+  color: #1a1a1a;
+  font-family: "Source Sans 3", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: #1565c0;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+input,
+select,
+button {
+  font: inherit;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  border: 2px solid #1a1a1a;
+  background: #fff;
+  border-radius: 0;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1rem;
+  border: 2px solid #1a1a1a;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.btn-primary {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #333;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  background: transparent;
+}
+
+.btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+}
+
+.btn-danger {
+  border-color: #c62828;
+  color: #c62828;
+}
+
+.btn-danger:hover {
+  background: #c62828;
+  color: #fff;
+}
+
+.btn-sm {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8rem;
+}
+
+.card {
+  background: #fff;
+  border: 2px solid #1a1a1a;
+  box-shadow: 4px 4px 0 #1a1a1a;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.muted {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.form-error {
+  color: #c62828;
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+}
+
+.page-loading,
+.app-loading {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
