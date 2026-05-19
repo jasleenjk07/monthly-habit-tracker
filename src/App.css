@@ -1,0 +1,516 @@
+/* App shell */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1.25rem;
+  background: #fff;
+  border-bottom: 2px solid #1a1a1a;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.brand-mark {
+  width: 2rem;
+  height: 2rem;
+  background: #1a1a1a;
+  border-radius: 4px;
+}
+
+.brand-title {
+  margin: 0;
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.brand-sub {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.app-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.nav-link {
+  padding: 0.4rem 0.75rem;
+  text-decoration: none;
+  color: #444;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 2px solid transparent;
+}
+
+.nav-link:hover {
+  color: #1a1a1a;
+}
+
+.nav-link.active {
+  color: #1a1a1a;
+  border-color: #1a1a1a;
+  background: #f0ebe3;
+}
+
+.app-main {
+  flex: 1;
+  padding: 1.5rem 1.25rem 2.5rem;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Auth */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(160deg, #f0ebe3 0%, #e8e0d4 100%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border: 2px solid #1a1a1a;
+  box-shadow: 6px 6px 0 #1a1a1a;
+  padding: 2rem;
+}
+
+.auth-card h1 {
+  margin: 0 0 0.35rem;
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-size: 1.6rem;
+}
+
+.auth-lead {
+  margin: 0 0 1.5rem;
+  color: #555;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-footer {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  background: #fff;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.btn-google:hover {
+  background: #f5f5f5;
+  color: #1a1a1a;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.25rem 0;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #ccc;
+}
+
+.auth-divider span {
+  flex-shrink: 0;
+}
+
+.google-signin-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.google-setup-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: #666;
+  padding: 0.65rem 0.75rem;
+  background: #faf8f5;
+  border: 1px solid #e0dcd4;
+}
+
+.google-setup-hint code {
+  font-size: 0.75rem;
+  background: #eee;
+  padding: 0.1rem 0.25rem;
+}
+
+.google-setup-hint p {
+  margin: 0 0 0.5rem;
+}
+
+.google-setup-hint p:last-child {
+  margin-bottom: 0;
+}
+
+.setup-cmd {
+  margin: 0.5rem 0 0.75rem;
+  padding: 0.65rem 0.85rem;
+  background: #1a1a1a;
+  color: #f0ebe3;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.setup-missing {
+  color: #c62828;
+  font-size: 0.8rem;
+}
+
+.btn-google-muted {
+  opacity: 0.92;
+}
+
+/* Pages */
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-title {
+  margin: 0;
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+}
+
+.page-desc {
+  margin: 0.35rem 0 0;
+  color: #555;
+  width: 100%;
+}
+
+.month-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.month-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.month-value {
+  min-width: 9rem;
+  text-align: center;
+  font-weight: 600;
+  padding-bottom: 0.15rem;
+  border-bottom: 2px solid #1a1a1a;
+}
+
+.nav-btn {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 2px solid #1a1a1a;
+  background: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+/* Tracker table */
+.table-wrap {
+  overflow-x: auto;
+}
+
+.habit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.habit-table th,
+.habit-table td {
+  border: 1px solid #d4cfc4;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.habit-table thead th {
+  font-weight: 600;
+  padding: 0.35rem 0.15rem;
+  background: #faf8f5;
+}
+
+.col-index {
+  width: 2rem;
+  font-weight: 600;
+}
+
+.col-habit {
+  min-width: 8rem;
+  text-align: left !important;
+  padding: 0.4rem 0.5rem !important;
+  white-space: nowrap;
+}
+
+.activity-dot {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+}
+
+.col-day {
+  width: 1.65rem;
+  min-width: 1.65rem;
+  padding: 0.1rem !important;
+}
+
+.checkbox-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.5rem;
+  cursor: pointer;
+  margin: 0;
+}
+
+.checkbox-cell input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.check-mark {
+  width: 0.8rem;
+  height: 0.8rem;
+  border: 1.5px solid #1a1a1a;
+  background: #fff;
+}
+
+.checkbox-cell input:checked + .check-mark {
+  background: #1a1a1a;
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+.stats {
+  margin: 0.75rem 0 0;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.tracker-save-error {
+  margin: 0 0 1rem;
+  padding: 0.65rem 0.85rem;
+  background: #fff5f5;
+  border: 1px solid #c62828;
+}
+
+.graph-title {
+  margin: 0 0 0.75rem;
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-size: 1.05rem;
+}
+
+.chart-wrap {
+  width: 100%;
+  min-height: 260px;
+}
+
+/* Forms & lists */
+.form-card h2,
+.card h2 {
+  margin: 0 0 1rem;
+  font-size: 1.05rem;
+}
+
+.inline-form {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .inline-form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .inline-form .btn-primary {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}
+
+.color-picker {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.color-swatch {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+}
+
+.color-swatch.active {
+  border-color: #1a1a1a;
+  outline: 2px solid #fff;
+  box-shadow: 0 0 0 2px #1a1a1a;
+}
+
+.item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.item-row:last-child {
+  border-bottom: none;
+}
+
+.item-body {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tag {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.45rem;
+  border: 1px solid;
+  border-radius: 999px;
+}
+
+.platform-link {
+  font-size: 0.85rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+}
+
+.empty-state p {
+  margin-bottom: 1rem;
+}
+
+/* Analytics */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 1.25rem 1rem;
+  margin-bottom: 0;
+}
+
+.stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: "Libre Baskerville", Georgia, serif;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.chart-card h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.analytics-row {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 900px) {
+  .analytics-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .analytics-row .half {
+    margin-bottom: 0;
+  }
+}
+
+.range-control label {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.range-control select {
+  width: auto;
+}
