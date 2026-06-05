@@ -60,9 +60,15 @@ The app splits into:
 ### 1. Deploy backend on Railway
 
 1. Create a project at [railway.app](https://railway.app) → **Deploy from GitHub** → select this repo.
-2. Railway detects Node and runs `npm start` (see `railway.toml`).
-3. Add a **Volume** mounted at `/app/data` so SQLite persists (Settings → Volumes).
-4. Set **Variables** in Railway:
+2. Railway uses `nixpacks.toml` + `railway.toml` — **Node 22**, API-only (no Vite build), `npm start`.
+3. If deploy fails healthcheck, add variable `NIXPACKS_NODE_VERSION=22` on the service.
+4. Add a **Volume** so SQLite persists (optional; not in Project Settings — see below):
+   - Open your **project canvas** (the view with your service boxes)
+   - Press **⌘K** (Mac) or **Ctrl+K** (Windows) → search **"Add Volume"**
+   - Or **right-click** the canvas → create volume
+   - Select your **backend service** → mount path: **`/app/data`**
+   - Redeploy the service after attaching
+5. Set **Variables** in Railway:
 
    | Variable | Example |
    |----------|---------|
@@ -72,8 +78,8 @@ The app splits into:
    | `GOOGLE_CLIENT_SECRET` | from Google Cloud |
    | `GOOGLE_REDIRECT_URI` | `https://YOUR-RAILWAY-URL.up.railway.app/api/auth/google/callback` |
 
-5. Copy your Railway public URL (e.g. `https://daily-tracker-production.up.railway.app`).
-6. Test: open `https://YOUR-RAILWAY-URL/api/health` — you should see JSON.
+6. Copy your Railway public URL (e.g. `https://daily-tracker-production.up.railway.app`).
+7. Test: open `https://YOUR-RAILWAY-URL/api/health` — you should see JSON.
 
 ### 2. Deploy frontend on Vercel
 

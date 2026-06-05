@@ -1,0 +1,12 @@
+# Railway API-only deploy
+[variables]
+NIXPACKS_NODE_VERSION = "22"
+
+[phases.install]
+cmds = ["npm install"]
+
+[phases.build]
+cmds = ["echo 'Skipping frontend build — API only'"]
+
+[start]
+cmd = "npm start"

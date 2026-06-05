@@ -4,7 +4,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(__dirname, "..", "data");
+/** Railway: mount volume at /app/data; set DATA_DIR or use RAILWAY_VOLUME_MOUNT_PATH */
+const dataDir =
+  process.env.DATA_DIR ??
+  process.env.RAILWAY_VOLUME_MOUNT_PATH ??
+  path.join(__dirname, "..", "data");
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 const dbPath = path.join(dataDir, "tracker.db");
 

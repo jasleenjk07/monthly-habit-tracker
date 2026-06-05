@@ -18,8 +18,6 @@ import { logsRouter } from "./routes/logs.js";
 import { analyticsRouter } from "./routes/analytics.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(__dirname, "..", "data");
-if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
@@ -67,11 +65,21 @@ if (fs.existsSync(distPath)) {
   });
 }
 
-app.listen(PORT, () => {
-  console.log(`API server running at http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`API server running on 0.0.0.0:${PORT}`);
   if (isGoogleConfigured()) {
     console.log("Google sign-in: enabled");
   } else {
-    console.log("Google sign-in: not configured — run: npm run setup:google");
+    console.log("Google sign-in: not configured — set GOOGLE_CLIENT_ID/SECRET");
   }
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception:", err);
+  process.exit(1);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled rejection:", err);
+  process.exit(1);
 });
