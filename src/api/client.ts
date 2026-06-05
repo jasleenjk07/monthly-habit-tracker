@@ -1,3 +1,5 @@
+import { apiUrl } from "./config";
+
 const TOKEN_KEY = "tracker_token";
 
 export function getToken(): string | null {
@@ -29,7 +31,7 @@ export async function api<T>(
   };
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  const res = await fetch(`/api${path}`, { ...options, headers });
+  const res = await fetch(apiUrl(path), { ...options, headers });
   if (res.status === 204) return undefined as T;
 
   const data = await res.json().catch(() => ({}));

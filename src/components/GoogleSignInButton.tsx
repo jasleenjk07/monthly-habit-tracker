@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
+import { apiUrl } from "../api/config";
 
 type GoogleStatus = {
   enabled: boolean;
@@ -41,13 +42,14 @@ export default function GoogleSignInButton() {
 
   return (
     <div className="google-signin-wrap">
-      <a href="/api/auth/google" className="btn btn-google">
+      <a href={apiUrl("/auth/google")} className="btn btn-google">
         <GoogleIcon />
         Continue with Google
       </a>
       {loadError && (
         <p className="google-setup-hint setup-missing">
-          Could not reach the API. Restart with <code>npm run dev</code> (server on port 3001).
+          Could not reach the API. Locally, run <code>npm run dev</code>. In production, set{" "}
+          <code>VITE_API_URL</code> on Vercel to your Railway backend URL.
         </p>
       )}
       {showSetupHint && (

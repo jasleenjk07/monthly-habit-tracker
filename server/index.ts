@@ -8,6 +8,7 @@ dotenv.config({ path: path.join(__envDir, "..", ".env") });
 import express from "express";
 import cors from "cors";
 import fs from "fs";
+import { getCorsOptions } from "./cors.js";
 import { googleConfigSummary, isGoogleConfigured } from "./env.js";
 import "./db.js";
 import { authRouter } from "./routes/auth.js";
@@ -23,7 +24,7 @@ if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
 
-app.use(cors());
+app.use(cors(getCorsOptions()));
 app.use(express.json());
 
 app.get("/api/health", (_req, res) => {
