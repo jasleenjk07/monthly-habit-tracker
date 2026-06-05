@@ -10,6 +10,7 @@ import cors from "cors";
 import fs from "fs";
 import { getCorsOptions } from "./cors.js";
 import { googleConfigSummary, isGoogleConfigured } from "./env.js";
+import { getGoogleRedirectUri } from "./google.js";
 import "./db.js";
 import { authRouter } from "./routes/auth.js";
 import { platformsRouter } from "./routes/platforms.js";
@@ -34,6 +35,7 @@ app.get("/api/health", (_req, res) => {
       envFileExists: g.envFileExists,
       clientIdSet: g.clientIdSet,
       secretSet: g.secretSet,
+      redirectUri: getGoogleRedirectUri(),
       setupCommand: "npm run setup:google",
     },
   });
@@ -47,6 +49,7 @@ app.get("/api/auth/google/status", (_req, res) => {
     envFileExists: g.envFileExists,
     clientIdSet: g.clientIdSet,
     secretSet: g.secretSet,
+    redirectUri: getGoogleRedirectUri(),
     setupCommand: "npm run setup:google",
   });
 });

@@ -12,10 +12,18 @@ const GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo";
 const pendingStates = new Map<string, number>();
 
 export function getGoogleRedirectUri(): string {
-  return (
-    process.env.GOOGLE_REDIRECT_URI ??
-    `http://localhost:${process.env.PORT ?? 3001}/api/auth/google/callback`
-  );
+  const explicit = process.env.GOOGLE_REDIRECT_URI?.trim();
+  if (explicit) return explicit.replace(/\/$/, "");
+
+  const railwayHost =
+    process.env.RAILWAY_PUBLIC_DOMAIN?.trim() ||
+    process.env.RAILWAY_STATIC_URL?.trim();
+  if (railwayHost) {
+    const base = railwayHost.startsWith("http") ? railwayHost : `https://${railwayHost}`;
+    return `${base.replace(/\/$/, "")}/api/auth/google/callback`;
+  }
+
+  return `http://localhost:${process.env.PORT ?? 3001}/api/auth/google/callback`;
 }
 
 export function getFrontendUrl(req?: { headers: { origin?: string } }): string {

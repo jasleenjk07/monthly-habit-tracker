@@ -7,6 +7,7 @@ type GoogleStatus = {
   envFileExists: boolean;
   clientIdSet: boolean;
   secretSet: boolean;
+  redirectUri?: string;
   setupCommand: string;
 };
 
@@ -60,30 +61,28 @@ export default function GoogleSignInButton() {
       {loadError && (
         <p className="google-setup-hint setup-missing">{loadError}</p>
       )}
+      {status?.enabled && status.redirectUri && (
+        <p className="google-redirect-hint">
+          If Google shows <strong>redirect_uri_mismatch</strong>, add this exact URI in{" "}
+          <a
+            href="https://console.cloud.google.com/apis/credentials"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Google Cloud Console
+          </a>{" "}
+          → OAuth client → <strong>Authorized redirect URIs</strong>:
+          <code className="redirect-uri-code">{status.redirectUri}</code>
+        </p>
+      )}
       {showSetupHint && (
         <div className="google-setup-hint">
           <p>
-            <strong>One-time setup</strong> — run in your project folder:
-          </p>
-          <pre className="setup-cmd">npm run setup:google</pre>
-          <p>
-            Then restart <code>npm run dev</code>. Keys come from{" "}
-            <a
-              href="https://console.cloud.google.com/apis/credentials"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Google Cloud Console
-            </a>
-            .
+            <strong>Google OAuth not configured.</strong> Set{" "}
+            <code>GOOGLE_CLIENT_ID</code> and <code>GOOGLE_CLIENT_SECRET</code> on Railway.
           </p>
           {!status.envFileExists && (
-            <p className="setup-missing">No <code>.env</code> file found yet.</p>
-          )}
-          {status.envFileExists && (!status.clientIdSet || !status.secretSet) && (
-            <p className="setup-missing">
-              <code>.env</code> exists but Google keys are missing or still placeholders.
-            </p>
+            <p className="setup-missing">Locally: run <code>npm run setup:google</code></p>
           )}
         </div>
       )}

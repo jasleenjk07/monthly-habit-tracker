@@ -10,6 +10,7 @@ import {
   exchangeCodeForProfile,
   getFrontendUrl,
   getGoogleAuthUrl,
+  getGoogleRedirectUri,
   verifyOAuthState,
 } from "../google.js";
 
@@ -22,6 +23,7 @@ authRouter.get("/google/status", (_req, res) => {
     envFileExists: summary.envFileExists,
     clientIdSet: summary.clientIdSet,
     secretSet: summary.secretSet,
+    redirectUri: getGoogleRedirectUri(),
     setupCommand: "npm run setup:google",
   });
 });
