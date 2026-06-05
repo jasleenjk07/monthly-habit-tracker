@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
-import { apiUrl } from "../api/config";
+import { apiUrl, getApiBaseUrl } from "../api/config";
 
 type GoogleStatus = {
   enabled: boolean;
@@ -17,24 +17,35 @@ type HealthResponse = {
 
 export default function GoogleSignInButton() {
   const [status, setStatus] = useState<GoogleStatus | null>(null);
-  const [loadError, setLoadError] = useState(false);
+  const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
+    const base = getApiBaseUrl();
+    if (!base) {
+      setStatus(null);
+      setLoadError(
+        "VITE_API_URL is not set. In Vercel → Settings → Environment Variables, add VITE_API_URL = your Railway URL, then Redeploy.",
+      );
+      return;
+    }
+
     api<HealthResponse>("/health")
       .then((data) => {
         if (data.google) {
           setStatus(data.google);
-          setLoadError(false);
+          setLoadError("");
         } else {
           return api<GoogleStatus>("/auth/google/status").then((s) => {
             setStatus(s);
-            setLoadError(false);
+            setLoadError("");
           });
         }
       })
       .catch(() => {
         setStatus(null);
-        setLoadError(true);
+        setLoadError(
+          `Cannot reach API at ${base}. Check Railway is running and open ${base}/api/health in your browser.`,
+        );
       });
   }, []);
 
@@ -47,10 +58,7 @@ export default function GoogleSignInButton() {
         Continue with Google
       </a>
       {loadError && (
-        <p className="google-setup-hint setup-missing">
-          Could not reach the API. Locally, run <code>npm run dev</code>. In production, set{" "}
-          <code>VITE_API_URL</code> on Vercel to your Railway backend URL.
-        </p>
+        <p className="google-setup-hint setup-missing">{loadError}</p>
       )}
       {showSetupHint && (
         <div className="google-setup-hint">

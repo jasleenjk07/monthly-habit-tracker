@@ -23,7 +23,17 @@ export function getCorsOptions(): CorsOptions {
 
   return {
     origin(origin, callback) {
-      if (!origin || allowed.has(origin.replace(/\/$/, ""))) {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+      const normalized = origin.replace(/\/$/, "");
+      if (allowed.has(normalized)) {
+        callback(null, true);
+        return;
+      }
+      // Allow all Vercel preview + production URLs (*.vercel.app)
+      if (/^https:\/\/[\w-]+\.vercel\.app$/.test(normalized)) {
         callback(null, true);
         return;
       }
