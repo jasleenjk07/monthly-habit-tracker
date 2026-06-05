@@ -113,10 +113,12 @@ Keep the localhost redirect URI for local dev.
 
 ---
 
-## Default data
+## New accounts
 
-New accounts get sample activities and platforms. Edit or delete them anytime.
+New users start with an **empty tracker** — no default activities or platforms. Add your own under **Activities** and **Platforms**.
 
 ## Data
 
-SQLite database at `data/tracker.db` (created automatically). Back up `data/` in production.
+SQLite database at `data/tracker.db` (created automatically).
+
+**Railway:** attach a volume at `/app/data` so checkmarks and activities persist across redeploys. Without a volume, data is lost when the service restarts.

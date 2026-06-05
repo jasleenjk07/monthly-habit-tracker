@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { currentMonthKey, daysInMonth } from "../dates.js";
-import { db } from "../db.js";
+import { db, flushDb } from "../db.js";
 import { authMiddleware } from "../auth.js";
 
 export const logsRouter = Router();
@@ -75,6 +75,7 @@ logsRouter.post("/toggle", (req, res) => {
     ).run(req.user!.id, activityId, date);
   }
 
+  flushDb();
   res.json({ ok: true, activityId, date, completed: shouldComplete });
 });
 
@@ -105,5 +106,6 @@ logsRouter.post("/bulk", (req, res) => {
     else remove.run(req.user!.id, e.activityId, e.date);
   }
 
+  flushDb();
   res.json({ ok: true });
 });

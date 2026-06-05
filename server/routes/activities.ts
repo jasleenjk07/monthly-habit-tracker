@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { db } from "../db.js";
+import { db, flushDb } from "../db.js";
 import { authMiddleware } from "../auth.js";
 
 export const activitiesRouter = Router();
@@ -63,6 +63,7 @@ activitiesRouter.post("/", (req, res) => {
        FROM activities a LEFT JOIN platforms p ON p.id = a.platform_id WHERE a.id = ?`,
     )
     .get(result.lastInsertRowid);
+  flushDb();
   res.status(201).json({ activity });
 });
 
@@ -102,6 +103,7 @@ activitiesRouter.patch("/:id", (req, res) => {
        FROM activities a LEFT JOIN platforms p ON p.id = a.platform_id WHERE a.id = ?`,
     )
     .get(id);
+  flushDb();
   res.json({ activity });
 });
 
@@ -114,5 +116,6 @@ activitiesRouter.delete("/:id", (req, res) => {
     res.status(404).json({ error: "Activity not found" });
     return;
   }
+  flushDb();
   res.status(204).send();
 });

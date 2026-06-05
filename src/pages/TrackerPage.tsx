@@ -25,6 +25,7 @@ export default function TrackerPage() {
   const [logs, setLogs] = useState<MonthLogs | null>(null);
   const [loading, setLoading] = useState(true);
   const [saveError, setSaveError] = useState("");
+  const [savedHint, setSavedHint] = useState(false);
 
   useEffect(() => {
     storeMonthKey(monthKey);
@@ -81,6 +82,8 @@ export default function TrackerPage() {
           completed: !wasChecked,
         }),
       });
+      setSavedHint(true);
+      window.setTimeout(() => setSavedHint(false), 2000);
     } catch (err) {
       setLogs(previousLogs);
       setSaveError(
@@ -117,6 +120,11 @@ export default function TrackerPage() {
       {saveError && (
         <p className="form-error tracker-save-error" role="alert">
           {saveError}
+        </p>
+      )}
+      {savedHint && !saveError && (
+        <p className="tracker-saved-hint" role="status">
+          Saved
         </p>
       )}
       <header className="page-header">

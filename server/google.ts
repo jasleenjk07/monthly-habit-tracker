@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { db, seedDefaults } from "./db.js";
+import { db } from "./db.js";
 import { signToken } from "./auth.js";
 import { isGoogleConfigured } from "./env.js";
 
@@ -149,7 +149,6 @@ export function findOrCreateGoogleUser(profile: GoogleProfile): {
     .run(email, name, profile.sub);
 
   const userId = Number(result.lastInsertRowid);
-  seedDefaults(userId);
 
   return db
     .prepare("SELECT id, email, name, created_at FROM users WHERE id = ?")

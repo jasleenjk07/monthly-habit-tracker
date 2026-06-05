@@ -2,7 +2,6 @@ import { Router } from "express";
 import bcrypt from "bcryptjs";
 import { db } from "../db.js";
 import { authMiddleware, signToken } from "../auth.js";
-import { seedDefaults } from "../db.js";
 import { googleConfigSummary, isGoogleConfigured } from "../env.js";
 import {
   authUserFromGoogle,
@@ -105,7 +104,6 @@ authRouter.post("/register", (req, res) => {
     .run(normalizedEmail, passwordHash, displayName);
 
   const userId = Number(result.lastInsertRowid);
-  seedDefaults(userId);
 
   const user = db
     .prepare("SELECT id, email, name, created_at FROM users WHERE id = ?")

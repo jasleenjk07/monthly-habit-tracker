@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { db } from "../db.js";
+import { db, flushDb } from "../db.js";
 import { authMiddleware } from "../auth.js";
 
 export const platformsRouter = Router();
@@ -26,6 +26,7 @@ platformsRouter.post("/", (req, res) => {
     .prepare("INSERT INTO platforms (user_id, name, color, url) VALUES (?, ?, ?, ?)")
     .run(req.user!.id, name.trim(), color ?? "#1a1a1a", url?.trim() || null);
   const platform = db.prepare("SELECT * FROM platforms WHERE id = ?").get(result.lastInsertRowid);
+  flushDb();
   res.status(201).json({ platform });
 });
 
@@ -49,6 +50,7 @@ platformsRouter.patch("/:id", (req, res) => {
     db.prepare("UPDATE platforms SET url = ? WHERE id = ?").run(url?.trim() || null, id);
   }
   const platform = db.prepare("SELECT * FROM platforms WHERE id = ?").get(id);
+  flushDb();
   res.json({ platform });
 });
 
@@ -61,5 +63,6 @@ platformsRouter.delete("/:id", (req, res) => {
     res.status(404).json({ error: "Platform not found" });
     return;
   }
+  flushDb();
   res.status(204).send();
 });

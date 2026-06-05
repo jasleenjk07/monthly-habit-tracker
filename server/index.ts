@@ -11,7 +11,7 @@ import fs from "fs";
 import { getCorsOptions } from "./cors.js";
 import { googleConfigSummary, isGoogleConfigured } from "./env.js";
 import { getGoogleRedirectUri } from "./google.js";
-import "./db.js";
+import { dbPath } from "./db.js";
 import { authRouter } from "./routes/auth.js";
 import { platformsRouter } from "./routes/platforms.js";
 import { activitiesRouter } from "./routes/activities.js";
@@ -28,8 +28,15 @@ app.use(express.json());
 
 app.get("/api/health", (_req, res) => {
   const g = googleConfigSummary();
+  const hasVolume = Boolean(process.env.RAILWAY_VOLUME_MOUNT_PATH);
   res.json({
     ok: true,
+    dbPath,
+    persistence: process.env.RAILWAY_ENVIRONMENT
+      ? hasVolume
+        ? "volume"
+        : "ephemeral"
+      : "local",
     google: {
       enabled: g.configured,
       envFileExists: g.envFileExists,

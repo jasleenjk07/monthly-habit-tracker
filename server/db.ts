@@ -10,12 +10,30 @@ const dataDir =
   process.env.RAILWAY_VOLUME_MOUNT_PATH ??
   path.join(__dirname, "..", "data");
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
-const dbPath = path.join(dataDir, "tracker.db");
+export const dbPath = path.join(dataDir, "tracker.db");
 
 export const db = new DatabaseSync(dbPath);
 
 db.exec("PRAGMA journal_mode = WAL");
 db.exec("PRAGMA foreign_keys = ON");
+db.exec("PRAGMA synchronous = FULL");
+
+console.log(`SQLite database: ${dbPath}`);
+
+if (process.env.RAILWAY_ENVIRONMENT && !process.env.RAILWAY_VOLUME_MOUNT_PATH) {
+  console.warn(
+    "WARNING: No Railway volume at /app/data. Tracker data may be lost when the service restarts or redeploys.",
+  );
+}
+
+/** Flush WAL so writes survive refresh (important on cloud containers). */
+export function flushDb(): void {
+  try {
+    db.exec("PRAGMA wal_checkpoint(FULL)");
+  } catch {
+    /* ignore */
+  }
+}
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
@@ -76,41 +94,3 @@ export type UserRow = {
   name: string;
   created_at: string;
 };
-
-const DEFAULT_PLATFORMS = [
-  { name: "LeetCode", color: "#ffa116", url: "https://leetcode.com" },
-  { name: "GitHub", color: "#24292e", url: "https://github.com" },
-  { name: "Coursera", color: "#0056d2", url: "https://coursera.org" },
-];
-
-const DEFAULT_ACTIVITIES = [
-  { name: "DSA", color: "#1a1a1a" },
-  { name: "Python", color: "#3776ab" },
-  { name: "AI/ML", color: "#ff6f00" },
-  { name: "Projects", color: "#2e7d32" },
-  { name: "LLD", color: "#6a1b9a" },
-  { name: "SQL", color: "#1565c0" },
-  { name: "Solve Aloud", color: "#c62828" },
-  { name: "Daily Planning", color: "#455a64" },
-];
-
-export function seedDefaults(userId: number): void {
-  const platformCount = db
-    .prepare("SELECT COUNT(*) as c FROM platforms WHERE user_id = ?")
-    .get(userId) as { c: number };
-  if (platformCount.c > 0) return;
-
-  const insertPlatform = db.prepare(
-    "INSERT INTO platforms (user_id, name, color, url) VALUES (?, ?, ?, ?)",
-  );
-  for (const p of DEFAULT_PLATFORMS) {
-    insertPlatform.run(userId, p.name, p.color, p.url);
-  }
-
-  const insertActivity = db.prepare(
-    "INSERT INTO activities (user_id, platform_id, name, color, sort_order) VALUES (?, NULL, ?, ?, ?)",
-  );
-  DEFAULT_ACTIVITIES.forEach((a, i) => {
-    insertActivity.run(userId, a.name, a.color, i);
-  });
-}

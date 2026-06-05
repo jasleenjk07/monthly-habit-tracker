@@ -375,6 +375,16 @@
   border: 1px solid #c62828;
 }
 
+.tracker-saved-hint {
+  margin: 0 0 1rem;
+  padding: 0.5rem 0.85rem;
+  background: #f0faf0;
+  border: 1px solid #2e7d32;
+  color: #2e7d32;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 .graph-title {
   margin: 0 0 0.75rem;
   font-family: "Libre Baskerville", Georgia, serif;
